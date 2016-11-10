@@ -1,0 +1,32 @@
+ var yetsQuery = from yetsItem in Aitimatas.AsNoTracking()                            where yetsItem.statusDPXP == StatusDPXP.YETS_EGEKRIMENO                            && yetsItem.HmerominiaEgkrisisYETS >= start && yetsItem.HmerominiaEgkrisisYETS <= end                            select new                            {                                ID = yetsItem.ID,                                KatigoriaProiontos = yetsItem.KatigoriaProiontos,                                IsotimoEuro = yetsItem.IsotimoEuro                            };
+ 
+ var eetsQuery = from eetsItem in Aitimatas.AsNoTracking()                            where eetsStatuses.Contains(eetsItem.statusDPXP)                            && eetsItem.HmerominiaLipsisApofasisEETS >= start && eetsItem.HmerominiaLipsisApofasisEETS <= end                            select new                            {                                ID = eetsItem.ID,                                KatigoriaProiontos = eetsItem.KatigoriaProiontos,                                IsotimoEuro = eetsItem.IsotimoEuro                            };
+ 
+ var query = from item in Aitimatas.AsNoTracking()
+             join yets in yetsQuery on item.ID equals yets.ID into yetsGroup
+               from y in yetsGroup.DefaultIfEmpty()
+             join eets in eetsQuery on item.ID equals eets.ID into eetsGroup                            
+                from e in eetsGroup.DefaultIfEmpty()
+             where item.KatigoriaProiontos != null && item.KatigoriaProiontos != ""                        
+             && item.Code != null && item.Code != ""
+             && types.Contains(item.AitimaType.Value)                        
+             && dpxpStatuses.Contains(item.statusDPXP)
+             &&                         
+             (
+                (item.HmerominiaEgkrisisYETS >= start && item.HmerominiaEgkrisisYETS <= end)
+                || (item.HmerominiaLipsisApofasisEETS >= start && item.HmerominiaLipsisApofasisEETS <= end)
+              )
+              select new                        
+              {
+                 KatigoriaProiontos = item.KatigoriaProiontos,
+                 YetsIsotimoEuro = y.IsotimoEuro,
+                 EetsIsotimoEuro = e.IsotimoEuro
+              }
+              into x  
+              group x by x.KatigoriaProiontos into grouped
+              select new EgkriseisAnaKatigoriaProiontosDto
+              {
+                   KatigoriaProiontos = grouped.Key,
+                   TotalIsotimoYETS = grouped.Sum(s => s == null ? 0m : s.YetsIsotimoEuro),
+                   TotalIsotimoEETS = grouped.Sum(s => s == null ? 0m : s.EetsIsotimoEuro)
+              };
