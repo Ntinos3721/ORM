@@ -1,0 +1,29 @@
+ string sqlQuery = @"select 
+            //                                Aitimata.KatigoriaProiontos
+            //                                ,sum(0) as yets_aeis
+            //                                ,sum(yets.IsotimoEuro) as yets_wf
+            //                                ,sum(eets.IsotimoEuro) as eets
+            //                                from Aitimata
+            //                                  left join (select id, KatigoriaProiontos, IsotimoEuro from aitimata where statusDPXP = N'xxxxx' and  IsotimoEuro is not null)  as yets 
+            //                                on yets.ID = Aitimata.ID
+            //
+            //                                  left  join (select id, KatigoriaProiontos, IsotimoEuro from aitimata where statusDPXP in (N'xxxxx',N'xxxxxx') and IsotimoEuro is not null)  as eets 
+            //                                 on eets.ID = Aitimata.ID
+            //
+            //                                where 
+            //                                (StatusYpovolis != N'xxxxxx'    and StatusYpovolis != N'xxxxx'  )
+            //                                and statusMD != N'xxxxxx'  
+            //                                --and (statusDPXP= N'xxxxxx' or statusDPXP= N'xxxxxx' or statusDPXP= N'xxxxx')
+            //                                and statusDPXP IN (N'xxxxx',N'xxxxx',N'xxxxxx')
+            //                                and aitimata.IsotimoEuro is not null
+            //
+            //                                group by Aitimata.KatigoriaProiontos;";
+            
+            
+            
+            
+            
+            
+            
+            
+            
